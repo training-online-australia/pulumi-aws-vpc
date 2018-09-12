@@ -180,6 +180,7 @@ export class Vpc extends ComponentResource implements VpcOutputs {
 
             // Elastic IP
             const eip = new aws.ec2.Eip(`${baseName}-nat-eip-${index + 1}`, {
+                vpc: true,
                 tags: eipTags,
             }, subnetParent);
 
