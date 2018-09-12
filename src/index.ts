@@ -10,17 +10,9 @@ import * as aws from "@pulumi/aws";
 import { ComponentResource, Output, ResourceOptions } from "@pulumi/pulumi";
 import { SubnetDistributor } from "./subnetDistributor";
 
-/**
- * Tags is a dictionary object representing tags to be applied to
- * an AWS resource.
- */
-export interface Tags {
-    [name: string]: string;
-}
-
 export interface VpcInputs {
     description: string;
-    baseTags: Tags;
+    baseTags: aws.Tags;
 
     baseCidr: string;
     azCount: number | "PerAZ";
@@ -29,7 +21,7 @@ export interface VpcInputs {
     createDynamoDbEndpoint?: boolean;
     enableFlowLogs?: boolean;
 
-    zoneName: string;
+    zoneName?: string;
 }
 
 export interface VpcOutputs {
@@ -65,7 +57,7 @@ export class Vpc extends ComponentResource implements VpcOutputs {
         const vpcParent = {parent: vpc};
 
         // Private Hosted Zone
-        if (inputs.zoneName !== "") {
+        if (inputs.zoneName) {
             const privateZone = new aws.route53.Zone(`${baseName}-private-hosted-zone`, {
                 vpcId: vpc.id,
                 name: inputs.zoneName,
