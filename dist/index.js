@@ -146,6 +146,7 @@ class Vpc extends pulumi_1.ComponentResource {
                 }, inputs.baseTags);
                 // Elastic IP
                 const eip = new aws.ec2.Eip(`${baseName}-nat-eip-${index + 1}`, {
+                    vpc: true,
                     tags: eipTags,
                 }, subnetParent);
                 // Create the NAT Gateway in the corresponding indexed PUBLIC subnet

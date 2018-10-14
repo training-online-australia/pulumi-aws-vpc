@@ -279,6 +279,6 @@ export class Vpc extends ComponentResource implements VpcOutputs {
     }
 
     private constructor(name: string, opts?: ResourceOptions) {
-        super("operator-error:aws:Vpc", name, {}, opts);
+        super("alffie:aws:Vpc", name, {}, opts);
     }
 }
