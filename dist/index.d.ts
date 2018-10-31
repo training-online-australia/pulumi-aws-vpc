@@ -12,12 +12,14 @@ export interface VpcInputs {
 }
 export interface VpcOutputs {
     vpcId: Output<string>;
+    baseCidr: string;
     privateSubnetIds: Output<string>[];
     publicSubnetIds: Output<string>[];
     privateHostedZoneId: Output<string>;
 }
 export declare class Vpc extends ComponentResource implements VpcOutputs {
     vpcId: Output<string>;
+    baseCidr: string;
     privateSubnetIds: Output<string>[];
     publicSubnetIds: Output<string>[];
     privateHostedZoneId: Output<string>;

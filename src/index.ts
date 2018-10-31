@@ -25,6 +25,7 @@ export interface VpcInputs {
 }
 
 export interface VpcOutputs {
+    baseCidr: string;
     vpcId: Output<string>;
     privateSubnetIds: Output<string>[];
     publicSubnetIds: Output<string>[];
@@ -32,6 +33,7 @@ export interface VpcOutputs {
 }
 
 export class Vpc extends ComponentResource implements VpcOutputs {
+    public baseCidr: string;
     public vpcId: Output<string>;
     public privateSubnetIds: Output<string>[];
     public publicSubnetIds: Output<string>[];
@@ -40,6 +42,8 @@ export class Vpc extends ComponentResource implements VpcOutputs {
     public static async create(name: string, inputs: VpcInputs, opts?: ResourceOptions) {
         const instance = new Vpc(name, opts);
         const instanceParent = {parent: instance};
+
+        instance.baseCidr = inputs.baseCidr;
 
         const baseName = name.toLowerCase();
 
@@ -99,7 +103,7 @@ export class Vpc extends ComponentResource implements VpcOutputs {
         }
 
         // Find AZ names
-        let azNames = (await aws.getAvailabilityZones({
+        const azNames = (await aws.getAvailabilityZones({
             state: "available",
         })).names;
 

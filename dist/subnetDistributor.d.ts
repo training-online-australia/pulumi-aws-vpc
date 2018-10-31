@@ -21,6 +21,8 @@ export declare class SubnetDistributor {
      * @returns {SubnetDistributor} A SubnetDistributor instance.
      */
     static fixedCount(baseCidr: string, azCount: number): SubnetDistributor;
+    /** @internal */
+    private constructor();
     /**
      * Returns an array of the CIDR blocks for the private subnets.
      * @returns {Promise<string[]>}

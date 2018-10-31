@@ -23,6 +23,7 @@ class Vpc extends pulumi_1.ComponentResource {
         return __awaiter(this, void 0, void 0, function* () {
             const instance = new Vpc(name, opts);
             const instanceParent = { parent: instance };
+            instance.baseCidr = inputs.baseCidr;
             const baseName = name.toLowerCase();
             // VPC
             const vpcTags = Object.assign({
@@ -75,7 +76,7 @@ class Vpc extends pulumi_1.ComponentResource {
                 distributor = yield subnetDistributor_1.SubnetDistributor.perAz(inputs.baseCidr);
             }
             // Find AZ names
-            let azNames = (yield aws.getAvailabilityZones({
+            const azNames = (yield aws.getAvailabilityZones({
                 state: "available",
             })).names;
             // Public Subnets
@@ -196,7 +197,7 @@ class Vpc extends pulumi_1.ComponentResource {
                 const flowLogsRole = new aws.iam.Role(`${baseName}-flow-logs-role`, {
                     description: `${inputs.description} Flow Logs`,
                     assumeRolePolicy: JSON.stringify(aws.iam.assumeRolePolicyForPrincipal({
-                        Service: "vpc-flow-logs.amazonaws.com"
+                        Service: "vpc-flow-logs.amazonaws.com",
                     })),
                 }, vpcParent);
                 const flowLogsRoleParent = { parent: flowLogsRole };
@@ -232,7 +233,7 @@ class Vpc extends pulumi_1.ComponentResource {
         });
     }
     constructor(name, opts) {
-        super("operator-error:aws:Vpc", name, {}, opts);
+        super("alffie:aws:Vpc", name, {}, opts);
     }
 }
 exports.Vpc = Vpc;
