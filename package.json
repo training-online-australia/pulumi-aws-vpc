@@ -16,7 +16,7 @@
     "vpc"
   ],
   "scripts": {
-    "build": "tsc -p ./ --outDir dist/",
+    "build": "tsc -d -p ./ --outDir dist/",
     "lint": "tslint -c tslint.json 'src/**/*.ts'",
     "prepare": "tsc -p ./ --outDir dist/"
   },
